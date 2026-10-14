@@ -1,26 +1,301 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Social9 design tokens */
+@theme {
+  --color-paper: #fbfaf8;
+  --color-ink: #0f0e17;
+  --color-ink-soft: #46435a;
+  --color-line: #ebe8f0;
+  --color-canvas: #eceaf0;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-violet: #6d4aff;
+  --color-violet-soft: #efebff;
+  --color-violet-deep: #4b2fd6;
+  --color-pink: #ff4fa3;
+  --color-pink-soft: #ffe9f3;
+  --color-pink-deep: #b0145f;
+  --color-sky: #38bdf8;
+  --color-sky-soft: #e5f6ff;
+  --color-lime: #d4ff4f;
+  --color-lime-soft: #f4ffd6;
+  --color-sun: #ffc93c;
+  --color-sun-soft: #fff5d6;
+  --color-tangerine: #ff8a3d;
+  --color-tangerine-soft: #ffeee2;
+  --color-mint: #34d399;
+  --color-mint-soft: #ddfbef;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-display: var(--font-cabinet), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(15 14 23 / 0.06), 0 4px 10px -2px rgb(15 14 23 / 0.06), 0 22px 44px -18px rgb(15 14 23 / 0.24);
+  --shadow-float: 0 2px 6px rgb(15 14 23 / 0.08), 0 36px 70px -22px rgb(15 14 23 / 0.38);
+  --shadow-pop: 0 1px 2px rgb(15 14 23 / 0.12), 0 10px 24px -6px rgb(15 14 23 / 0.4);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-holo: holo-shift 8s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -10px; }
+  }
+  @keyframes marquee-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+  @keyframes beam-spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes aurora {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    50% { transform: translate(4%, -3%) rotate(8deg) scale(1.08); }
+    100% { transform: translate(-3%, 4%) rotate(-6deg) scale(1.02); }
+  }
+  @keyframes holo-shift {
+    from { background-position: 0% 0; }
+    to { background-position: 200% 0; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Big type: a crisp highlight edge and a soft brand glow underneath */
+@utility headline {
+  text-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9),
+    0 14px 34px rgb(109 74 255 / 0.16);
 }
+@utility headline-dark {
+  text-shadow: 0 10px 40px rgb(0 0 0 / 0.45);
+}
+
+/* Brand gradient (violet → pink), for the few moments that deserve it */
+@utility brand-gradient {
+  background-image: linear-gradient(120deg, var(--color-violet), var(--color-pink));
+}
+@utility brand-text {
+  background-image: linear-gradient(120deg, var(--color-violet), var(--color-pink) 70%, var(--color-tangerine));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  /* text-shadow would show through transparent text; a drop-shadow glows outside it */
+  filter: drop-shadow(0 10px 22px rgb(255 79 163 / 0.28));
+}
+/* Iridescent ring/edge used for profile picture rings and highlights */
+@utility holo {
+  background-image: conic-gradient(from 180deg, #ff4fa3, #ffc93c, #d4ff4f, #38bdf8, #6d4aff, #ff4fa3);
+}
+@utility checker {
+  background-color: #fff;
+  background-image: conic-gradient(#ebe8f0 25%, transparent 0 50%, #ebe8f0 0 75%, transparent 0);
+  background-size: 20px 20px;
+}
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
+
+/* Light sweep across a button on hover */
+@utility shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  }
+  &:hover::after {
+    transform: translateX(120%);
+  }
+}
+
+/* Card that lifts and glows on hover */
+@utility lift {
+  transition:
+    transform 0.35s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    box-shadow 0.35s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-float);
+  }
+}
+
+/* Slider used across tool panels */
+.range {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line);
+  cursor: pointer;
+  accent-color: var(--color-violet);
+}
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-ink);
+  box-shadow: var(--shadow-pop);
+}
+.range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Lenis (smooth scrolling): its own recommended rules. Without them the CSS smooth scroll
+   above animates each of Lenis's per-frame scroll steps again, which felt laggy in Safari. */
+html.lenis,
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-weight: 500;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: #fff;
+}
+
+/* items revealed by "See all" / new results: a soft rise, staggered with --i */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.fade-up {
+  animation: fade-up 0.35s cubic-bezier(.21,.47,.32,.98) both;
+  animation-delay: calc(min(var(--i, 0), 24) * 18ms);
+}
+
+/* native <dialog>: rise in, with the backdrop fading */
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+dialog[open] {
+  animation: dialog-in 0.32s cubic-bezier(.21,.47,.32,.98);
+}
+dialog[open]::backdrop {
+  animation: backdrop-in 0.25s ease-out;
+}
+
+@keyframes page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* only after the first page: the first paint stays instant (LCP) */
+html[data-nav] .page-in {
+  animation: page-in 0.35s ease-out both;
+}
+
+@keyframes story-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -28; }
+}
+
+@keyframes bar-shine {
+  from { background-position: -100% 0; }
+  to { background-position: 200% 0; }
+}
+
+/* privacy diagram on phones: one pulse running down the route */
+@keyframes pd-drop {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Entrance animations that run from CSS alone, so above-the-fold content
+   paints before JavaScript hydrates (keeps LCP fast). */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise-in 0.8s cubic-bezier(0.21, 0.47, 0.32, 0.98) both; }
+.pop { animation: pop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes rise-solid {
+  from { transform: translateY(22px); }
+  to { transform: none; }
+}
+/* For the LCP headline: moves in but is never transparent, so it paints immediately. */
+.rise-solid { animation: rise-solid 0.8s cubic-bezier(0.21, 0.47, 0.32, 0.98) both; }
+
+/* Readable long-form copy for policy and help pages */
+.prose-s9 { color: var(--color-ink-soft); font-size: 17px; line-height: 1.75; }
+.prose-s9 > * + * { margin-top: 1rem; }
+.prose-s9 strong { color: var(--color-ink); font-weight: 700; }
+.prose-s9 a { color: var(--color-violet-deep); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: rgb(109 74 255 / 0.3); transition: text-decoration-color 0.2s; }
+.prose-s9 a:hover { text-decoration-color: var(--color-violet); }
+.prose-s9 ul { list-style: none; padding: 0; }
+.prose-s9 ul > li { position: relative; padding-left: 1.6rem; }
+.prose-s9 ul > li + li { margin-top: 0.5rem; }
+.prose-s9 ul > li::before { content: ""; position: absolute; left: 0.25rem; top: 0.72em; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: linear-gradient(120deg, var(--color-violet), var(--color-pink)); }
+.prose-s9 h3 { color: var(--color-ink); font-family: var(--font-display); font-weight: 900; font-size: 20px; letter-spacing: -0.01em; margin-top: 1.5rem; }
+.prose-s9 code { font-size: 0.9em; background: var(--color-paper); padding: 0.1rem 0.4rem; border-radius: 0.4rem; }
+
+/* Skip rendering off-screen sections until they approach the viewport */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
