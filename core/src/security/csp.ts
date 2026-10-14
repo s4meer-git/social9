@@ -17,7 +17,8 @@
  */
 export const CSP_DIRECTIVES: Record<string, string[]> = {
   "default-src": ["'self'"],
-  "script-src": ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'", "https://cdn.jsdelivr.net"],
+  // ONNX Runtime imports its WASM bootstrap through a locally created blob URL.
+  "script-src": ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'", "blob:", "https://cdn.jsdelivr.net"],
   "worker-src": ["'self'", "blob:", "https://cdn.jsdelivr.net"],
   "connect-src": ["'self'", "https://cdn.jsdelivr.net", "https://huggingface.co", "https://*.hf.co"],
   "img-src": ["'self'", "data:", "blob:"],
