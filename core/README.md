@@ -15,15 +15,12 @@ that handles your photos, so you can read it and check the live website against 
 | [`src/security`](src/security) | The **Content-Security-Policy** that every Social9 page uses. The browser blocks connections to any host that is not on the list. |
 | [`docs`](docs) | [How it works](docs/how-it-works.md) · [Every network request](docs/network.md) · [The AI models](docs/models.md) · [Verify it yourself](docs/verify.md) |
 
-## What isn't in here, and why
+## The rest of the application
 
-The website, the editor's interface, the brand, and the creative presets (backgrounds,
-stickers, patterns, gradients) stay in Social9's private repository. Many companies split their
-code this way. The code that handles your photos is open, and the rest of the product is private.
-
-The private code can't send your photo anywhere either. The
-[Content-Security-Policy](src/security/csp.ts) applies to the whole site, including the parts
-that aren't here. Your browser enforces it, and you can read it in your browser's developer tools.
+The website, editor interface and creative presets live alongside `core/` in the
+[public Social9 repository](https://github.com/s4meer-git/social9).
+The [Content-Security-Policy](src/security/csp.ts) applies to the whole site.
+Your browser enforces it, and you can read it in your browser's developer tools.
 
 ## How it works, in short
 

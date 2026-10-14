@@ -6,8 +6,8 @@ export const SITE = {
   privacyEmail: "sameer.fyi@hotmail.com",
   legalEmail: "sameer.fyi@hotmail.com",
   policiesUpdated: "5 October 2026",
-  /** the public repository with the open-source engine (the /core folder). Placeholder until it's published. */
-  github: "https://github.com/social9-app/social9-core",
+  /** Public application repository; the photo-processing engine is in /core. */
+  github: "https://github.com/s4meer-git/social9",
 };
 
 export const mailto = (to: string, subject?: string) => `mailto:${to}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;

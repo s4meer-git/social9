@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const mb = (bytes: number) => (bytes < 1e6 ? `${Math.round(bytes / 1e3)} KB` : `${(bytes / 1e6).toFixed(1)} MB`);
 
 /** A link to a file in the public engine repository. */
-const code = (path: string) => `${SITE.github}/blob/main/${path}`;
+const code = (path: string) => `${SITE.github}/blob/main/core/${path}`;
 
 const steps = [
   {
@@ -112,12 +112,12 @@ const open = [
   "The security policy used on every page",
   "Tests, and a script that checks every AI model",
 ];
-const closed = ["The design of the website and the editor", "Our brand, illustrations and marketing pages", "Backgrounds, stickers and patterns"];
+const website = ["The website and editor interface", "Illustrations and marketing pages", "Backgrounds, stickers and patterns"];
 
 const faqs = [
   {
-    q: "Why isn't all of Social9 open source?",
-    a: "Everything that handles your photos is open source, along with the security policy that applies to the whole site. The design, the brand and the creative extras like stickers and backgrounds stay private, as they do at most companies that publish part of their code. The security policy applies to the private code too, so it can't send your photos anywhere either.",
+    q: "Where can I read Social9's code?",
+    a: "The full website and editor are available in our public GitHub repository. The core folder contains the photo-processing engine and security policy. The same policy applies to every part of the website.",
   },
   {
     q: "How do I know the website uses this code?",
@@ -289,7 +289,8 @@ export default function HowItWorksPage() {
                     <FaCode aria-hidden /> Try it yourself
                   </p>
                   <pre className="mt-3 overflow-x-auto text-[13.5px] leading-relaxed text-white/85">
-                    <code>{`npm install
+                    <code>{`cd core
+npm install
 npm test
 npm run verify-models`}</code>
                   </pre>
@@ -300,13 +301,13 @@ npm run verify-models`}</code>
           </Reveal>
         </Container>
 
-        {/* open vs private */}
+        {/* public repository contents */}
         <section className="bg-white py-24">
           <Container>
-            <SectionHeading title="What is open source" text="All the code that handles your photos is public. The rest of the website is private, and the same security policy applies to it." />
+            <SectionHeading title="Read the source" text="The photo-processing engine, website and editor are in our public repository. The same security policy applies to the whole site." />
             <div className="mx-auto mt-14 grid max-w-5xl gap-5 md:grid-cols-2">
               <Reveal className="rounded-[32px] bg-paper p-7 ring-1 ring-black/[0.04]">
-                <h3 className="font-display text-[24px] font-black">Open source</h3>
+                <h3 className="font-display text-[24px] font-black">Photo-processing engine</h3>
                 <ul className="mt-5 space-y-3">
                   {open.map((t) => (
                     <li key={t} className="flex items-start gap-3 text-[16px]">
@@ -319,12 +320,12 @@ npm run verify-models`}</code>
                 </ul>
               </Reveal>
               <Reveal delay={0.06} className="rounded-[32px] bg-paper p-7 ring-1 ring-black/[0.04]">
-                <h3 className="font-display text-[24px] font-black">Private</h3>
+                <h3 className="font-display text-[24px] font-black">Website and editor</h3>
                 <ul className="mt-5 space-y-3">
-                  {closed.map((t) => (
+                  {website.map((t) => (
                     <li key={t} className="flex items-start gap-3 text-[16px] text-ink-soft">
                       <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink/10 text-[11px] text-ink/60">
-                        <FaLock aria-hidden />
+                        <FaCode aria-hidden />
                       </span>
                       {t}
                     </li>

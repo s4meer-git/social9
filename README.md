@@ -24,7 +24,7 @@ The build is a fully static export (`output: "export"`), so you can host `out/` 
 | `src/lib/tools.ts` | Tool registry. Landing pages, menus and the editor rail are all generated from it. |
 | `src/lib/platforms.ts` | Every platform and its exact sizes |
 | `src/editor` | Editor state (Zustand, undo/redo), the render pipeline and export |
-| `core/` | **The open-source engine** (published separately on GitHub, Apache-2.0): AI runtime and models with SHA-256 checks, face detection, cut-outs, photo decoding and metadata, the converter and encoders, the Content-Security-Policy. The app imports it as `@social9/core/*`. |
+| `core/` | **The open-source engine** (Apache-2.0): AI runtime and models with SHA-256 checks, face detection, cut-outs, photo decoding and metadata, the converter and encoders, the Content-Security-Policy. The app imports it as `@social9/core/*`. |
 | `src/lib/image` | Compositing (backgrounds, face effects, profile-picture rings). Private: creative presets live here. |
 | `src/components/fx` | Locally owned UI effects: spotlight cards, border beam, flip words, tilt, aurora, marquee, number ticker |
 | `src/components/home` | Marketing sections, including the code-animated explainer reel |
@@ -45,10 +45,9 @@ pinned and checked with Subresource Integrity.
 
 ## Open source
 
-`core/` is the public part: everything that touches a user's photo, plus the security
-policy for the whole site. Publish it as its own repository (e.g. with `git subtree split
---prefix core`), and set `SITE.github` in `src/lib/site.ts` to its URL. The `/how-it-works`
-page links there.
+The application is published at [s4meer-git/social9](https://github.com/s4meer-git/social9).
+`core/` contains the photo-processing engine and security policy for the whole site.
+The `/how-it-works` page links directly to these files in the public repository.
 
 The Content-Security-Policy is defined in `core/src/security/csp.ts`. It's served from
 `public/_headers` and as a `<meta>` tag in production. A unit test fails if the two drift apart.
